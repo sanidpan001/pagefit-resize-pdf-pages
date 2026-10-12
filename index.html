@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PageFit — Resize PDF Pages to A4, Letter, A5 or Legal Online Free</title>
+<meta name="description" content="Free PDF page resizer. Convert every page of a PDF to A4, Letter, A5, Legal or A3 with proportional scaling, anchor positioning and a mixed-size report.">
+<link rel="canonical" href="https://pagefit.fixoraa.tech/">
+<meta property="og:title" content="PageFit — Resize PDF Pages to A4, Letter, A5 or Legal Online Free">
+<meta property="og:description" content="Free PDF page resizer. Convert every page of a PDF to A4, Letter, A5, Legal or A3 with proportional scaling, anchor positioning and a mixed-size report.">
+<meta property="og:url" content="https://pagefit.fixoraa.tech/">
+<meta property="og:type" content="website">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js"></script>
+<script>pdfjsLib.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';</script>
+<style>
+:root{--pri:#6D28D9;--acc:#F59E0B;--bgc:#F5F3FF}
+body{background:var(--bgc);font-family:'Segoe UI',system-ui,sans-serif}
+.pri{background:var(--pri)} .prit{color:var(--pri)}
+.btn{background:var(--pri);color:#fff;padding:.6rem 1.2rem;border-radius:.6rem;font-weight:600;cursor:pointer;border:none}
+.btn:hover{opacity:.9} .btn2{background:var(--acc);color:#111;padding:.6rem 1.2rem;border-radius:.6rem;font-weight:600;cursor:pointer;border:none}
+.btn:disabled,.btn2:disabled{opacity:.45;cursor:not-allowed}
+input,select,textarea{border:1.5px solid #cbd5e1;border-radius:.55rem;padding:.55rem .7rem;width:100%;background:#fff;color:#0f172a}
+input[type=file]{padding:.45rem .6rem} input[type=range]{padding:0} input[type=checkbox],input[type=radio]{width:auto}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--pri);border-color:transparent}
+label{font-size:.83rem;font-weight:600;display:block;margin-bottom:.3rem}
+.card{background:#fff;border-radius:1rem;box-shadow:0 8px 30px rgba(15,23,42,.08);padding:1.4rem}
+article p{margin:.7rem 0;line-height:1.75;color:#334155}
+article h2{font-size:1.45rem;font-weight:800;margin:1.6rem 0 .4rem;color:#0f172a}
+.faq{background:#fff;border-radius:.7rem;padding:.9rem 1.1rem;margin:.55rem 0;box-shadow:0 2px 10px rgba(15,23,42,.05)}
+.faq summary{font-weight:700;cursor:pointer}
+table.dt{width:100%;border-collapse:collapse} table.dt th,table.dt td{border:1px solid #e2e8f0;padding:.45rem .6rem;text-align:left;font-size:.9rem}
+table.dt th{background:#f1f5f9}
+.drop{border:2px dashed #94a3b8;border-radius:.8rem;padding:1.1rem;text-align:center;background:#f8fafc}
+canvas.prev{max-width:100%;border:1px solid #e2e8f0;border-radius:.5rem;background:#fff}
+
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "WebApplication", "name": "PageFit", "url": "https://pagefit.fixoraa.tech/", "applicationCategory": "UtilitiesApplication", "operatingSystem": "Any", "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"}, "description": "Free PDF page resizer. Convert every page of a PDF to A4, Letter, A5, Legal or A3 with proportional scaling, anchor positioning and a mixed-size report."}</script>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Will resizing stretch or distort my pages?", "acceptedAnswer": {"@type": "Answer", "text": "No. With keep-proportions on (the default), every page is scaled to fit entirely inside the target size with its aspect ratio intact. Leftover space is placed according to the anchor you choose."}}, {"@type": "Question", "name": "What is the difference between A4 and Letter?", "acceptedAnswer": {"@type": "Answer", "text": "A4 is 595\u00d7842 pt (210\u00d7297 mm), used in most of the world. Letter is 612\u00d7792 pt (8.5\u00d711 in), standard in North America \u2014 slightly wider and shorter. Converting avoids clipping and odd printer scaling."}}, {"@type": "Question", "name": "Can I make landscape pages portrait?", "acceptedAnswer": {"@type": "Answer", "text": "Yes \u2014 force Portrait orientation and landscape pages are fitted onto portrait pages. 'Match each page' instead preserves each page's own orientation at the new size."}}, {"@type": "Question", "name": "Does quality suffer when pages get bigger?", "acceptedAnswer": {"@type": "Answer", "text": "Vector text and graphics stay perfectly sharp at any size. Scanned image pages are limited by their source resolution, so a large enlargement of a low-resolution scan can look soft \u2014 the report cannot invent pixels."}}, {"@type": "Question", "name": "My PDF has several page sizes. What happens?", "acceptedAnswer": {"@type": "Answer", "text": "That is normal for assembled documents. Every page is converted to the single target size, and the mixed-size report lists each original size and its page count for your records."}}, {"@type": "Question", "name": "Is my file uploaded anywhere?", "acceptedAnswer": {"@type": "Answer", "text": "No. The rebuild runs entirely in your browser; your document stays on your device."}}]}</script>
+</head>
+<body id="top">
+<header class="sticky top-0 z-40 shadow-md" style="background:#2E1065">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 py-3 flex items-center justify-between">
+    <a href="#top" class="text-xl font-extrabold tracking-tight" style="color:#F5F3FF">📐 PageFit</a>
+    <nav class="flex gap-5 text-sm font-semibold" style="color:#F5F3FF">
+      <a href="#top" class="hover:underline">Home</a>
+      <a href="https://fixoraa.tech" class="hover:underline">More Tools</a>
+    </nav>
+  </div>
+</header>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pt-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <div class="origin-top scale-[0.44] sm:scale-100 shrink-0">
+        <script>
+          atOptions = { 'key' : '4e68ac77881c17fe128a46565d9a4e8c', 'format' : 'iframe', 'height' : 90, 'width' : 728, 'params' : {} };
+        </script>
+        <script src="https://www.highrevenueformat.com/4e68ac77881c17fe128a46565d9a4e8c/invoke.js"></script>
+      </div>
+    </div>
+  </div>
+</div>
+<main class="mx-auto max-w-6xl px-4 sm:px-6 py-8">
+  <div class="text-center mb-6">
+    <h1 class="text-3xl sm:text-4xl font-extrabold" style="color:#0f172a">Resize PDF Pages to A4, Letter, A5 & More</h1>
+    <p class="mt-2 text-slate-600 max-w-2xl mx-auto">A document built for one paper size misbehaves on another: clipped edges, tiny content, wasted sheets. PageFit rebuilds every page at the standard size you choose — scaled proportionally, positioned where you want it.</p>
+    <span class="inline-block mt-3 px-3 py-1 rounded-full text-xs font-bold text-white pri">✓ Unlimited Free Usage — No Signup, No Watermark</span>
+    <p class="mt-2 text-xs text-slate-500">🔒 100% private: your file is processed entirely in your browser and never uploaded to any server.</p>
+  </div>
+  <div class="grid md:grid-cols-5 gap-6">
+  <div class="card md:col-span-2 space-y-3">
+    <div class="drop"><label>Your PDF</label><input id="file" type="file" accept="application/pdf"></div>
+    <div class="grid grid-cols-2 gap-3"><div><label>Target page size</label><select id="tsize"><option>A4</option><option>Letter</option><option>A5</option><option>Legal</option><option>A3</option></select></div>
+    <div><label>Orientation</label><select id="ori"><option value="auto">Match each page</option><option value="p">Portrait</option><option value="l">Landscape</option></select></div></div>
+    <div><label>Anchor (where small pages sit)</label><select id="anchor"><option value="cc">Centre</option><option value="tl">Top-left area</option><option value="bl">Bottom-left area</option></select></div>
+    <div><label><input type="checkbox" id="lock" checked> Keep proportions (never stretch)</label></div>
+    <button class="btn w-full" id="go" onclick="run()">Resize Pages</button>
+    <button class="btn2 w-full" id="dl" style="display:none">⬇ Download resized PDF</button>
+    <p id="status" class="text-sm font-semibold"></p>
+  </div>
+  <div class="card md:col-span-3">
+    <h3 class="font-bold mb-2">Mixed-size report</h3>
+    <div id="rep" class="overflow-x-auto text-sm text-slate-600">Load a PDF to see every distinct page size it contains — and exactly what each becomes at your target. Mixed-size documents are more common than anyone expects.</div>
+  </div></div>
+</main>
+<div class="no-print mx-auto max-w-6xl px-4 sm:px-6 pb-4" role="complementary" aria-label="Advertisement">
+  <div class="mx-auto text-center" style="max-width:728px">
+    <span class="block text-[10px] tracking-[0.18em] uppercase text-slate-400 mb-1.5">Advertisement</span>
+    <div class="flex justify-center overflow-hidden">
+      <script async src="https://js.wpadmngr.com/static/adManager.js" data-admpid="464498"></script>
+    </div>
+  </div>
+</div>
+<section class="mx-auto max-w-4xl px-4 sm:px-6 pb-6">
+  <article>
+  <h2>Paper sizes are a quiet source of printing chaos</h2>
+<p>The world's paper does not agree with itself. A4 rules most of the planet; North America runs on Letter, slightly wider and shorter; Legal stretches long for contracts; A5 halves A4 for booklets and flyers. A PDF remembers the size it was born at, and a printer fed the wrong size must improvise — scaling unpredictably, clipping an edge, or shrinking your document into the middle of the sheet surrounded by a moat of white. PageFit removes the improvisation by rebuilding the document at the size your printer, portal or publisher actually expects.</p>
+<p>The conversion is done properly: every original page is embedded whole and scaled proportionally onto a true target-size page, never stretched or squashed. Text stays vector-crisp, images keep their aspect, and the output is a uniform document — every page the same standard size, ready for any workflow that assumes uniformity, from duplex printing to booklet imposition to archival standards.</p>
+<h2>Proportions, anchors and the geometry of fit</h2>
+<p>Fitting one rectangle into another always involves a choice. PageFit's keep-proportions rule makes the sane one automatically: scale until the page fits entirely inside the target, so nothing is ever cropped. When aspect ratios differ — a landscape slide onto a portrait A4, say — the leftover space is distributed by the anchor you choose. Centre is the balanced default; top-left suits documents that will gain headers or be hole-punched; bottom-left suits signature-heavy pages where the foot of the page matters most.</p>
+<p>Scaling down is lossless in quality for vector content — an A3 poster page fitted to A4 stays sharp, just smaller. Scaling up is equally honest: an A5 page enlarged to A4 keeps vector text perfect, while scanned image pages can only be as sharp as their source pixels. The mixed-size report keeps you informed throughout: it lists every distinct page size in the source — documents assembled from several origins often hide three or four — and what each becomes.</p>
+<h2>How to resize a PDF, step by step</h2>
+<p>Load the file, choose the target size, and decide orientation: 'Match each page' preserves every page's own portrait or landscape character at the new size, which is right for mixed documents; forcing portrait or landscape suits uniform deliverables. Pick an anchor if your pages are smaller than the target in one dimension, confirm keep-proportions is on (it should be, unless you have a genuinely exotic reason to distort), and press Resize.</p>
+<p>Read the mixed-size report before downloading — it is your receipt: which sizes went in, how many pages each, and the target they became. Then download and print a single sheet to confirm the printer and the file now agree. If the document is headed for a portal with a stated size requirement, this ten-second verification is the difference between acceptance and a cryptic rejection at deadline.</p>
+<h2>The jobs that demand an exact page size</h2>
+<p>Submission systems are the strictest customers: journals, courts, exam boards and government portals routinely specify A4 or Letter and some check the actual page geometry of uploads. Print shops are the second: a booklet or flyer run begins with 'all pages A5', and a mixed-size file stops the job. International collaboration is the third — the European partner's A4 report lands in an American office whose trays hold Letter, and someone must reconcile them before the meeting handout prints.</p>
+<p>There is also quiet standardisation work: archives that ingest decades of scans at every size imaginable, and normalise them to one for storage, viewing and OCR consistency. In all these cases the demand is the same — not approximately A4, not scaled-at-print-time, but a file whose pages are the size, uniformly. That is a small specification with an outsized effect on whether everything downstream just works.</p>
+<h2>PageFit versus print-dialog scaling</h2>
+<p>Every print dialog offers 'fit to page', so why convert the file? Because dialog scaling is temporary, per-print and per-printer: it evaporates the moment the file moves, and two printers will improvise differently. A resized PDF carries its geometry with it — the portal sees A4, the archive stores A4, every printer prints A4 without decisions. Conversion also composes: resize to A5 first and booklet imposition, n-up stacking and compression tools all receive the uniform input they work best with.</p>
+<p>Dialog scaling has one more hidden cost — unpredictability of margins. Printers add their own unprintable edges on top of the dialog's fit calculation, occasionally clipping content that the file itself would have preserved. By fitting content inside the target page with an anchor you control, PageFit decides where the breathing room goes, once, deliberately — instead of letting three layers of software negotiate it badly at print time.</p>
+<h2>Privacy: standard sizes, unstandardised documents</h2>
+<p>Size conversion requests arrive attached to tenders, filings, manuscripts and applications — pre-release documents, most of them. PageFit rebuilds yours inside your browser tab; the PDF never leaves your device, and nothing is retained after the tab closes. The mixed-size report is generated locally from your file alone.</p>
+<p>Working locally also keeps the workflow honest at scale: a two-hundred-page archive normalisation runs at your processor's speed with no upload tier, no queue and no per-page pricing. Uniform pages, private process, zero ceremony — which is what infrastructure tools should feel like.</p>
+<h2>Verifying size like a print professional</h2>
+<p>After converting, confirm with your viewer's document properties: page size is stated there in millimetres or inches, and it should match your target on every page — uniformity is the deliverable, so spot-check the first, a middle and the last page. If a portal rejected your file before conversion, re-upload the converted file rather than a print-dialog rescale; validators read the file's own geometry, which is exactly what changed. Keep the pre-conversion original in the project folder: a size conversion is a one-way presentation decision, and returning to the source is how you produce the Letter edition after the A4 edition without compounding scalings. One scaling, from the master, per edition — that is the whole secret of clean size management.</p>
+  <h2>Frequently Asked Questions</h2>
+  <details class="faq"><summary>Will resizing stretch or distort my pages?</summary><p>No. With keep-proportions on (the default), every page is scaled to fit entirely inside the target size with its aspect ratio intact. Leftover space is placed according to the anchor you choose.</p></details>
+<details class="faq"><summary>What is the difference between A4 and Letter?</summary><p>A4 is 595×842 pt (210×297 mm), used in most of the world. Letter is 612×792 pt (8.5×11 in), standard in North America — slightly wider and shorter. Converting avoids clipping and odd printer scaling.</p></details>
+<details class="faq"><summary>Can I make landscape pages portrait?</summary><p>Yes — force Portrait orientation and landscape pages are fitted onto portrait pages. 'Match each page' instead preserves each page's own orientation at the new size.</p></details>
+<details class="faq"><summary>Does quality suffer when pages get bigger?</summary><p>Vector text and graphics stay perfectly sharp at any size. Scanned image pages are limited by their source resolution, so a large enlargement of a low-resolution scan can look soft — the report cannot invent pixels.</p></details>
+<details class="faq"><summary>My PDF has several page sizes. What happens?</summary><p>That is normal for assembled documents. Every page is converted to the single target size, and the mixed-size report lists each original size and its page count for your records.</p></details>
+<details class="faq"><summary>Is my file uploaded anywhere?</summary><p>No. The rebuild runs entirely in your browser; your document stays on your device.</p></details>
+  </article>
+</section>
+<footer class="mt-6 py-8" style="background:#2E1065;color:#F5F3FF">
+  <div class="mx-auto max-w-6xl px-4 sm:px-6 text-center text-sm">
+    <p class="font-bold text-base">PageFit</p>
+    <p class="opacity-80 mt-1">Free PDF page resizer. Convert every page of a PDF to A4, Letter, A5, Legal or A3 with proportional scaling, anchor positioning and a mixed-size report.</p>
+    <p class="mt-2"><a href="#top" class="underline">Home</a> · <a href="https://fixoraa.tech" class="underline">More Tools</a></p>
+    <p class="fx-credit" style="text-align:center;font-size:12.5px;opacity:.62;margin:10px auto 2px;letter-spacing:.01em">Made by <a href="https://fixoraa.tech" target="_blank" rel="noopener" style="color:inherit;font-weight:700;text-decoration:underline;text-underline-offset:2px">Fixoraa</a></p>
+  </div>
+</footer>
+<script id="lib-pagefit">
+
+var PAGE_SIZES={A4:[595.28,841.89],Letter:[612,792],A5:[419.53,595.28],Legal:[612,1008],A3:[841.89,1190.55]};
+function fitScale(sw,sh,tw,th){ return Math.min(tw/sw, th/sh); }
+function anchorXY(anchor,pw,ph,dw,dh){ var x=(pw-dw)/2, y=(ph-dh)/2; if(anchor.indexOf('l')>-1&&anchor!=='tl'||anchor==='bl') x=24; if(anchor==='tr'||anchor==='br') x=pw-dw-24; return [x,y]; }
+if (typeof module!=="undefined") module.exports={PAGE_SIZES:PAGE_SIZES, fitScale:fitScale};
+
+</script>
+<script>
+
+const $=id=>document.getElementById(id);
+function fmtBytes(b){if(b===0)return '0 B';const k=1024,s=['B','KB','MB','GB'];const i=Math.floor(Math.log(b)/Math.log(k));return (b/Math.pow(k,i)).toFixed(i?1:0)+' '+s[i];}
+function setStatus(m,ok){const el=$('status');if(!el)return;el.textContent=m;el.style.color=ok===false?'#dc2626':'inherit';}
+function download(bytes,name,type){const blob=bytes instanceof Blob?bytes:new Blob([bytes],{type:type||'application/pdf'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;document.body.appendChild(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},800);}
+async function readFile(input){const f=input.files&&input.files[0];if(!f)throw new Error('Please choose a PDF file first.');return {file:f,buf:await f.arrayBuffer()};}
+function showDl(id,bytes,name){const b=$(id);b.style.display='inline-block';b.onclick=()=>download(bytes,name);}
+
+
+async function run(){
+  const btn=$('go'); btn.disabled=true;
+  try{
+    const {file,buf}=await readFile($('file'));
+    const src=await PDFLib.PDFDocument.load(buf.slice(0));
+    const out=await PDFLib.PDFDocument.create();
+    const embedded=await out.embedPdf(await src.save());
+    const target=PAGE_SIZES[$('tsize').value];
+    const counts={};
+    src.getPages().forEach(p=>{ const s=p.getSize(); const k=Math.round(s.width)+'×'+Math.round(s.height); counts[k]=(counts[k]||0)+1; });
+    for(let i=0;i<src.getPageCount();i++){
+      const ep=embedded[i];
+      let [tw,th]=target;
+      const ori=$('ori').value;
+      if(ori==='l'||(ori==='auto'&&ep.width>ep.height)) [tw,th]=[th,tw];
+      const np=out.addPage([tw,th]);
+      const sc=$('lock').checked? fitScale(ep.width,ep.height,tw,th) : Math.min(tw/ep.width,th/ep.height);
+      const dw=ep.width*sc, dh=ep.height*sc;
+      let x=(tw-dw)/2, y=(th-dh)/2;
+      if($('anchor').value==='tl'){ x=24; y=th-dh-24; } if($('anchor').value==='bl'){ x=24; y=24; }
+      np.drawPage(ep,{x:x,y:y,width:dw,height:dh});
+    }
+    const bytes=await out.save();
+    $('rep').innerHTML='<table class="dt"><tr><th>Original size (pt)</th><th>Pages</th><th>Becomes</th></tr>'+Object.keys(counts).map(k=>'<tr><td>'+k+'</td><td>'+counts[k]+'</td><td>'+$('tsize').value+' ('+target.join('×')+' pt)</td></tr>').join('')+'</table><p class="mt-2">All '+src.getPageCount()+' pages resized with proportions preserved — no page was stretched or squashed.</p>';
+    showDl('dl',bytes,file.name.replace(/\.pdf$/i,'')+'-'+$('tsize').value.toLowerCase()+'.pdf');
+    setStatus('Done ✔ Every page is now '+$('tsize').value+'.');
+  }catch(e){ setStatus('⚠ '+(e.message||e),false); }
+  btn.disabled=false;
+}
+
+</script>
+</body>
+</html>
